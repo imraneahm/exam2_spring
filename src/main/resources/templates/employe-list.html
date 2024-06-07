@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+  <h2 class="text-center">Employee List</h2>
+  <div class="text-right mb-3">
+    <a href="/assign" class="btn btn-primary">Add Employee</a>
+    <a href="/login" class="btn btn-secondary">Back to Home</a>
+  </div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Skills</th>
+      <th>Projects</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employe : ${employes}">
+      <td th:text="${employe.id}"></td>
+      <td th:text="${employe.name}"></td>
+      <td th:text="${employe.email}"></td>
+      <td>
+        <ul>
+          <li th:each="skill : ${employe.skills}" th:text="${skill}"></li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li th:each="project : ${employe.projects}">
+            <span th:text="${project.name}"></span>
+            <span th:text="' (' + ${project.implication} + '%)'"></span>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <form action="/remove-employe" method="post">
+          <input type="hidden" name="employeId" th:value="${employe.id}">
+          <button type="submit" class="btn btn-danger">Remove</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
